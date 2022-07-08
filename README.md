@@ -1,4 +1,7 @@
-Python script to get the daily 1-month HIBOR rates from the HKMA API.
+Python script to get the daily 1-month HIBOR rates from the HKMA API.  
+  
+HKMA Source:  
+https://apidocs.hkma.gov.hk/documentation/market-data-and-statistics/daily-monetary-statistics/daily-figures-interbank-liquidity/
 
 Requirement:
   - Python (ver 3)
