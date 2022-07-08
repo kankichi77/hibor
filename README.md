@@ -9,7 +9,7 @@ usage: hibor.py [-h] [-f YYYYMMDD] [-t YYYYMMDD] [-c N] [-nd]
 
 Retrieves and outputs 1-Month HIBOR rates from the HKMA API.
 FORMAT:
-YYYY-MM-DD      HIBOR_RATE
+YYYY-MM-DD  HIBOR_RATE
 
 optional arguments:
   -h, --help      show this help message and exit
