@@ -5,12 +5,16 @@ BASE_API_URL = 'https://api.hkma.gov.hk/public/market-data-and-statistics'
 BASE_API_URL += '/daily-monetary-statistics/daily-figures-interbank-liquidity'
 DEFAULT_RECORD_COUNT = 10
 MAX_RECORD_COUNT = 1000
+#DELIMITER = '\t'
+DELIMITER = ', '
+OUTPUT_DATE_FORMAT = '%m/%d/%Y'
 
 def printHiborDataFromApi(
     datefrom = 0,
     dateto = 0,
     recordcount = 0,
-    show_date = True
+    show_date = True,
+    only_date = False
   ):
 
   if not recordcount or recordcount > MAX_RECORD_COUNT:
@@ -43,9 +47,17 @@ def printHiborDataFromApi(
   if j["header"]["success"]:
     if len(l):
       for r in l:
-        if show_date: d = f"{r['end_of_date']}\t"
-        else: d = ''
-        print(f"{d}{r['hibor_fixing_1m']}%")
+        date = datetime.datetime.strptime(r['end_of_date'],'%Y-%m-%d').strftime(OUTPUT_DATE_FORMAT)
+        rate = f"{r['hibor_fixing_1m']}%"
+
+        if only_date:
+          rate = ''
+        elif show_date:
+          date += DELIMITER
+        else:
+          date = ''
+        
+        print(f"{date}{rate}")
     else:
       print(f'No data')
   else:
@@ -58,6 +70,8 @@ if __name__ == "__main__":
     description = PROG_DESC,
     formatter_class=argparse.RawDescriptionHelpFormatter,
   )
+  date_group = parser.add_mutually_exclusive_group()
+
   parser.add_argument('-f',
     help = 'The FROM date to retrieve data',
     type = int,
@@ -77,10 +91,15 @@ if __name__ == "__main__":
     dest = 'recordcount',
     default = DEFAULT_RECORD_COUNT
     )
-  parser.add_argument('-nd', '-no_date',
+  date_group.add_argument('-nd', '-no_date',
     help = 'Do not display date in output (default: false)',
     action = 'store_false',
     dest = 'no_date'
+    )
+  date_group.add_argument('-od', '-only_date',
+    help = 'Display ONLY the date in output (default: false)',
+    action = 'store_true',
+    dest = 'only_date'
     )
   args = parser.parse_args()
   
@@ -88,6 +107,7 @@ if __name__ == "__main__":
     datefrom=args.datefrom,
     dateto = args.dateto,
     recordcount = args.recordcount,
-    show_date = args.no_date
+    show_date = args.no_date,
+    only_date = args.only_date
     )
 
