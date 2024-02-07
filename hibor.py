@@ -9,7 +9,7 @@ MAX_RECORD_COUNT = 1000
 DELIMITER = ', '
 OUTPUT_DATE_FORMAT = '%m/%d/%Y'
 
-def printHiborDataFromApi(
+def getHiborDataFromApi(
     datefrom = 0,
     dateto = 0,
     recordcount = 0,
@@ -103,7 +103,7 @@ if __name__ == "__main__":
     )
   args = parser.parse_args()
   
-  printHiborDataFromApi(
+  getHiborDataFromApi(
     datefrom=args.datefrom,
     dateto = args.dateto,
     recordcount = args.recordcount,
