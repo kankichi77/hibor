@@ -1,4 +1,4 @@
-import urllib.request, re, datetime, time
+import urllib.request, re, datetime
 from bs4 import BeautifulSoup
 
 def getRealtimeHIBOR():
@@ -26,11 +26,8 @@ def getRealtimeHIBOR():
         return None
 
 if __name__ == "__main__":
-    while True:
-        result = getRealtimeHIBOR()
-        if result:
-            print(f"{datetime.datetime.today():%Y/%m/%d %H:%M}: {result}")
-        else:
-            print(f"{datetime.datetime.today():%Y/%m/%d %H:%M}: No new rate published for today.")
-        time.sleep(60)
-        
+    result = getRealtimeHIBOR()
+    if result:
+        print(f"{datetime.datetime.today():%Y/%m/%d %H:%M}: {result}")
+    else:
+        print(f"{datetime.datetime.today():%Y/%m/%d %H:%M}: No new rate published for today.")
