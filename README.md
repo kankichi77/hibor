@@ -24,7 +24,16 @@ YYYY-MM-DD    HIBOR_RATE
 |-c N, -count N|Max number of records to retrieve (default: 10)|
 |-nd, -no_date|Do not display date in output (default: false)|
 
+### Create CSV file to open in Excel
 
+```
+echo "sep=,">hibor.csv; python3 hibor.py -f 20130620 -c 30 >> hibor.csv
+```
+
+### Get today's HIBOR
+```
 % python3 realtime.py
-
+```
 Retrieves the 1-month HIBOR from the HKAB website since the rates are published at 11:15am every business day but the API is only updated daily. (to be integrated into hibor.py sometime in the future...)
+
+
