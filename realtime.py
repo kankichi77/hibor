@@ -18,7 +18,7 @@ def getRealtimeHIBOR():
             hibor = div.contents[1].div.string
     if datetime.date.today() == dt.date():
         return {
-            "date": dt.strftime('%Y-%m-%d'),
+            "date": dt.strftime('%Y/%m/%d'),
             "term": term,
             "hibor": hibor,
         }
@@ -28,6 +28,6 @@ def getRealtimeHIBOR():
 if __name__ == "__main__":
     result = getRealtimeHIBOR()
     if result:
-        print(f"{datetime.datetime.today():%Y/%m/%d %H:%M}: {result}")
+        print(f"{datetime.datetime.today():%Y/%m/%d %H:%M}: {result['date']}, {result['hibor']}%")
     else:
         print(f"{datetime.datetime.today():%Y/%m/%d %H:%M}: No new rate published for today.")

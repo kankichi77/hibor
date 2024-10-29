@@ -7,15 +7,18 @@ DEFAULT_RECORD_COUNT = 10
 MAX_RECORD_COUNT = 1000
 #DELIMITER = '\t'
 DELIMITER = ', '
-OUTPUT_DATE_FORMAT = '%m/%d/%Y'
+OUTPUT_DATE_FORMAT = '%Y/%m/%d'
 
 def getHiborDataFromApi(
     datefrom = 0,
     dateto = 0,
     recordcount = 0,
     show_date = True,
-    only_date = False
+    only_date = False,
+    timestamp_flag = False
   ):
+
+  timestamp:str = ""
 
   if not recordcount or recordcount > MAX_RECORD_COUNT:
     recordcount = DEFAULT_RECORD_COUNT
@@ -56,8 +59,11 @@ def getHiborDataFromApi(
           date += DELIMITER
         else:
           date = ''
-        
-        print(f"{date}{rate}")
+
+        if timestamp_flag:
+            timestamp = f"{datetime.datetime.today():%Y/%m/%d %H:%M}: " 
+
+        print(f"{timestamp}{date}{rate}")
     else:
       print(f'No data')
   else:
@@ -84,6 +90,11 @@ if __name__ == "__main__":
     metavar = 'YYYYMMDD',
     dest = 'dateto'
     )
+  parser.add_argument('-ts', '-timestamp',
+    help = 'Display timestamp (default: false)',
+    dest = 'timestamp_flag',
+    action = 'store_true'
+    )
   parser.add_argument('-c', '-count',
     help = 'Max number of records to retrieve (default: 10)', 
     type = int,
@@ -108,6 +119,7 @@ if __name__ == "__main__":
     dateto = args.dateto,
     recordcount = args.recordcount,
     show_date = args.no_date,
-    only_date = args.only_date
+    only_date = args.only_date,
+    timestamp_flag = args.timestamp_flag
     )
 
